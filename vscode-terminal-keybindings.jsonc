@@ -1,0 +1,28 @@
+// Paste these entries INSIDE the [ ... ] array of VS Code's keybindings.json
+// (Cmd+Shift+P -> "Preferences: Open Keyboard Shortcuts (JSON)").
+//
+// Why: Karabiner turns Ctrl+<letter> into Cmd+<letter> in VS Code so the editor
+// feels like Windows. Karabiner can't tell the editor from the terminal panel,
+// so these entries turn the Cmd chords back into real control characters, but
+// ONLY while the integrated terminal has focus. The editor is unaffected.
+[
+    // Ctrl+C: copy when text is selected (like Windows), otherwise send SIGINT.
+    // (With a selection, VS Code's default Cmd+C copy applies.)
+    { "key": "cmd+c", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0003" }, "when": "terminalFocus && !terminalTextSelected" },
+
+    // Linux-style copy/paste in the terminal, matching the other terminals.
+    { "key": "cmd+shift+c", "command": "workbench.action.terminal.copySelection", "when": "terminalFocus && terminalTextSelected" },
+    { "key": "cmd+shift+v", "command": "workbench.action.terminal.paste",         "when": "terminalFocus" },
+
+    // Common shell / TUI control characters
+    { "key": "cmd+d", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0004" }, "when": "terminalFocus" }, // Ctrl+D  EOF / exit
+    { "key": "cmd+z", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u001a" }, "when": "terminalFocus" }, // Ctrl+Z  suspend
+    { "key": "cmd+a", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0001" }, "when": "terminalFocus" }, // Ctrl+A  line start (tmux/screen prefix too)
+    { "key": "cmd+b", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0002" }, "when": "terminalFocus" }, // Ctrl+B  back one char (tmux prefix)
+    { "key": "cmd+f", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0006" }, "when": "terminalFocus" }, // Ctrl+F  forward one char
+    { "key": "cmd+n", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u000e" }, "when": "terminalFocus" }, // Ctrl+N  next history
+    { "key": "cmd+p", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0010" }, "when": "terminalFocus" }, // Ctrl+P  previous history
+    { "key": "cmd+t", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0014" }, "when": "terminalFocus" }, // Ctrl+T  swap characters
+    { "key": "cmd+u", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0015" }, "when": "terminalFocus" }, // Ctrl+U  kill to line start
+    { "key": "cmd+w", "command": "workbench.action.terminal.sendSequence", "args": { "text": "\u0017" }, "when": "terminalFocus" }  // Ctrl+W  delete previous word
+]
